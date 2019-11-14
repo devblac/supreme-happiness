@@ -24,7 +24,10 @@
             <ul class="nav navbar-nav">
                 <li><a href="/">Inicio</a></li>
                 <li><a href="/saludar">Saludar</a></li>
+                <!-- Solo se permite ver estos links si existe 'username' en sesion -->
                 {% if 'username' in session %}
+                <!-- Agrego link al nuevo endpoint Clientes -->
+                <li><a href="/clientes">Clientes</a></li>
                 <li><a href="/logout">Salir</a></li>
                 {% else %}
                 <li><a href="/ingresar">Ingresar</a></li>

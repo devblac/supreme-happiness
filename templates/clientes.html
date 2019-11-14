@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Bienvenido{% endblock %}
+
+{% block page_content %}
+<div class="page-header">
+    <h1>Lista de clientes</h1>
+        <div class="container">
+        <table class="table">
+            <!-- csv_as_list lista de listas, con todos los clientes que se han leódo en clientes.csv -->
+            <!-- recorremos la lista de listas -->
+            {% for data in csv_as_list %} 
+            <!-- por cada sublista, habrá una fila -->
+                <tr>
+                    <!-- Ahora recorremos cada elemento de la sublista -->
+                    {% for d in data %}
+                    <!-- Y mostramos todos los elementos en cada celda -->
+                    <td>{{ d }}</td>
+                    {% endfor %} 
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% endblock %}

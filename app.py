@@ -42,7 +42,6 @@ def no_encontrado(e):
 def error_interno(e):
     return render_template('500.html'), 500
 
-
 @app.route('/ingresar', methods=['GET', 'POST'])
 def ingresar():
     formulario = LoginForm()
@@ -77,6 +76,21 @@ def registrar():
             flash('Las passwords no matchean')
     return render_template('registrar.html', form=formulario)
 
+# Nuevo endpoint /clientes, con método GET
+@app.route('/clientes', methods=['GET'])
+def clientes():
+    # Se valida si el usuario inició o no sesión
+    if 'username' in session:
+        # Si usuario en sessión es true, entonces abre el archivo clientes.csv con encoding utf8 y lo guarda en memoria, en f
+        f = open('clientes.csv', 'r', encoding='utf8')
+        # con la library csv, el método reader lee el archivo en memoria f, y lo parsea como csv
+        csvreader = csv.reader(f)
+        # se crea la lista csv_as_list con el csvreader
+        csv_as_list = list(csvreader)
+        # se redireecciona a clientes.html y se le envía la lista de clientes leída
+        return render_template('clientes.html', csv_as_list = csv_as_list)
+    # Si intentó acceder al endpoint por URL pero no estaba logueado, no se le permite acceder.
+    return redirect(url_for('ingresar'))
 
 @app.route('/secret', methods=['GET'])
 def secreto():
@@ -84,7 +98,6 @@ def secreto():
         return render_template('private.html', username=session['username'])
     else:
         return render_template('sin_permiso.html')
-
 
 @app.route('/logout', methods=['GET'])
 def logout():
